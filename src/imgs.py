@@ -19,22 +19,21 @@ images = []
 # os.makedirs('./images/')
 
 def download_imgs():
-  try:
-      data = buscar_dados()
+    try:
+        data = buscar_dados()
 
-      for urls in data:
-          # download the image URL and display it
-          nome = str(urls['nome']).replace(' ', '').lower()
-          print(urls['nome'])
-          os.makedirs('./images/' + nome)
+        for urls in data:
+            # download the image URL and display it
+            nome = str(urls['nome']).replace(' ', '').lower()
+            print(urls['nome'])
+            if (not os.path.exists('./images/' + nome)):
+                os.makedirs('./images/' + nome)
+                for url in urls['img']:
+                    # print(url)
+                    urllib.request.urlretrieve(
+                        url, './images/'+nome+'/'+'photo'+str(uuid.uuid4())+'.jpg')
+            print("Imagem salva! =)")
 
-          for url in urls['img']:
-          # print(url)
-              urllib.request.urlretrieve(
-              url, './images/'+nome+'/'+'photo'+str(uuid.uuid4())+'.jpg')
-      print("Imagem salva! =)")
-  except:
-      erro = sys.exc_info()
-      if(not FileExistsError()):
+    except:
+        erro = sys.exc_info()
         print("Ocorreu um erro:", erro)
-
